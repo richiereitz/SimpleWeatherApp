@@ -23,6 +23,7 @@
 		B63BE2381F800B64005F53E7 /* WAOpenWeatherClouds.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2371F800B64005F53E7 /* WAOpenWeatherClouds.m */; };
 		B63BE23B1F800B9E005F53E7 /* WAOpenWeatherCitySys.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE23A1F800B9E005F53E7 /* WAOpenWeatherCitySys.m */; };
 		B63BE23F1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */; };
+		B63BE2451F802CAD005F53E7 /* WAWeatherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2441F802CAD005F53E7 /* WAWeatherTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,8 @@
 		B63BE23D1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WARKModelObjectEntityMapping.h"; sourceTree = "<group>"; };
 		B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WARKModelObjectEntityMapping.m"; sourceTree = "<group>"; };
 		B63BE2411F80114F005F53E7 /* WARKModelObjectEntityMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WARKModelObjectEntityMapping.h; sourceTree = "<group>"; };
+		B63BE2431F802CAD005F53E7 /* WAWeatherTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAWeatherTableViewCell.h; sourceTree = "<group>"; };
+		B63BE2441F802CAD005F53E7 /* WAWeatherTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAWeatherTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,7 @@
 				B63BE21A1F8008C5005F53E7 /* Category */,
 				B63BE2131F8001BD005F53E7 /* Model */,
 				B63BE20E1F80012F005F53E7 /* Networking */,
+				B63BE2421F802C93005F53E7 /* UITableViewCell */,
 				B631DD291F7FFD9B00349684 /* UIViewController */,
 				B63BE2171F8004EC005F53E7 /* Utility */,
 			);
@@ -241,6 +245,15 @@
 				B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */,
 			);
 			path = NSObject;
+			sourceTree = "<group>";
+		};
+		B63BE2421F802C93005F53E7 /* UITableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE2431F802CAD005F53E7 /* WAWeatherTableViewCell.h */,
+				B63BE2441F802CAD005F53E7 /* WAWeatherTableViewCell.m */,
+			);
+			path = UITableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +390,7 @@
 				B63BE2381F800B64005F53E7 /* WAOpenWeatherClouds.m in Sources */,
 				B601DA921F7FFBC000A8AAE0 /* main.m in Sources */,
 				B63BE22F1F800AF6005F53E7 /* WAOpenWeatherCityMain.m in Sources */,
+				B63BE2451F802CAD005F53E7 /* WAWeatherTableViewCell.m in Sources */,
 				B63BE2111F80015C005F53E7 /* WAOpenWeatherNetworkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

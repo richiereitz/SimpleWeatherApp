@@ -80,7 +80,7 @@ Example WAOpenWeatherCity object fromhttp://openweathermap.org/weather-condition
 @property (nonatomic, readonly, copy, nullable) WAOpenWeatherCityCoordinate* coordinate;
 
 #pragma mark - weather
-@property (nonatomic, readonly, copy, nullable) WAOpenWeatherCityWeather* weather;
+@property (nonatomic, copy, nullable) NSArray<WAOpenWeatherCityWeather*>* weather;
 
 #pragma mark - base
 @property (nonatomic, readonly, copy, nullable) NSString* base;

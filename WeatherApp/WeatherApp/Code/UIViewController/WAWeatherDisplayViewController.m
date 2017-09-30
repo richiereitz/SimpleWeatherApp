@@ -9,9 +9,11 @@
 #import "WAWeatherDisplayViewController.h"
 #import "WAOpenWeatherCity.h"
 #import "WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.h"
+#import "WAWeatherTableViewCell.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
+#import <ResplendentUtilities/NSString+RUMacros.h>
 
 #import <RTSMTableSectionManager/RTSMTableSectionManager.h>
 
@@ -28,10 +30,10 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	WAWeatherDisplayViewController_TableSection_type_none,
 	
-	WAWeatherDisplayViewController_TableSection_type_basicDetails,
+	WAWeatherDisplayViewController_TableSection_type_weather,
 	WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand,
 	
-	WAWeatherDisplayViewController_TableSection_type__first	= WAWeatherDisplayViewController_TableSection_type_basicDetails,
+	WAWeatherDisplayViewController_TableSection_type__first	= WAWeatherDisplayViewController_TableSection_type_weather,
 	WAWeatherDisplayViewController_TableSection_type__last		= WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand,
 };
 
@@ -52,6 +54,9 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	
 #pragma mark - tableSectionManager
 @property (nonatomic, readonly, strong, nullable) RTSMTableSectionManager* tableSectionManager;
+	
+#pragma mark - weatherTableViewCell
+-(nullable WAWeatherTableViewCell*)weatherTableViewCell;
 
 #pragma mark - searchCityRequest_attempt
 -(void)searchCityRequest_attempt_with_text:(nullable NSString*)text;
@@ -146,10 +151,24 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell* const cell = [UITableViewCell new];
-	[cell setBackgroundColor:[UIColor whiteColor]];
+	WAWeatherDisplayViewController_TableSection_type const sectionType = [self.tableSectionManager sectionForIndexPathSection:indexPath.section];
 	
-	return cell;
+	switch (sectionType)
+	{
+		case WAWeatherDisplayViewController_TableSection_type_none:
+		break;
+		
+		case WAWeatherDisplayViewController_TableSection_type_weather:
+		return [self weatherTableViewCell];
+		break;
+		
+		case WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand:
+		return [UITableViewCell new];
+		break;
+	}
+	
+	NSAssert(false, @"unhandled section type %li",(long)sectionType);
+	return [UITableViewCell new];
 }
 	
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -160,7 +179,7 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 		case WAWeatherDisplayViewController_TableSection_type_none:
 			break;
 		
-		case WAWeatherDisplayViewController_TableSection_type_basicDetails:
+		case WAWeatherDisplayViewController_TableSection_type_weather:
 			return 350.0f;
 			break;
 		
@@ -178,6 +197,26 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 {
 		return YES;
 }
+	
+#pragma mark - weatherTableViewCell
+-(nullable WAWeatherTableViewCell*)weatherTableViewCell
+	{
+		kRUDefineNSStringConstant(kWAWeatherDisplayViewController_cellIdentifier_WAWeatherTableViewCell);
+		
+		WAWeatherTableViewCell* weatherCell = [self.tableView dequeueReusableCellWithIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WAWeatherTableViewCell];
+		if (weatherCell == nil)
+		{
+			weatherCell = [[WAWeatherTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WAWeatherTableViewCell];
+		}
+		
+		//I don't like doing this but doing so for speed so I don't have to display potentially multiple weather objects
+		if (self.openWeatherCity.weather.count > 0)
+		{
+			[weatherCell setWeather:self.openWeatherCity.weather[0]];
+		}
+		
+		return weatherCell;
+	}
 	
 #pragma mark - openWeatherCity
 -(void)setOpenWeatherCity:(nullable WAOpenWeatherCity *)openWeatherCity
@@ -228,74 +267,74 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey,id>*)change context:(nullable void*)context
+{
+	if (context == kWAWeatherDisplayViewController_KVOContext)
 	{
-		if (context == kWAWeatherDisplayViewController_KVOContext)
+		if (object == self.openWeatherCity)
 		{
-			if (object == self.openWeatherCity)
+			if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO coordinate]])
 			{
-				if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO coordinate]])
-				{
-					NSLog(@"Coordinate");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO weather]])
-				{
-					NSLog(@"weather");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO base]])
-				{
-					NSLog(@"base");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO main]])
-				{
-					NSLog(@"main");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO wind]])
-				{
-					NSLog(@"wind");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO rain]])
-				{
-					NSLog(@"rain");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO clouds]])
-				{
-					NSLog(@"clouds");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO dt]])
-				{
-					NSLog(@"dt");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO sys]])
-				{
-					NSLog(@"sys");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO identifier]])
-				{
-					NSLog(@"identifier");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO name]])
-				{
-					[self navigationItem_text_update];
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO cod]])
-				{
-					NSLog(@"cod");
-				}
-				else
-				{
-					NSAssert(false, @"unhandled keyPath %@",keyPath);
-				}
+				NSLog(@"Coordinate");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO weather]])
+			{
+				[self.tableView reloadData];
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO base]])
+			{
+			NSLog(@"base");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO main]])
+			{
+				NSLog(@"main");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO wind]])
+			{
+				NSLog(@"wind");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO rain]])
+			{
+				NSLog(@"rain");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO clouds]])
+			{
+				NSLog(@"clouds");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO dt]])
+			{
+				NSLog(@"dt");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO sys]])
+			{
+				NSLog(@"sys");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO identifier]])
+			{
+				NSLog(@"identifier");
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO name]])
+			{
+				[self navigationItem_text_update];
+			}
+			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO cod]])
+			{
+				NSLog(@"cod");
 			}
 			else
 			{
-				NSAssert(false, @"unhandled object %@",object);
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
 			}
 		}
 		else
 		{
-			[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+			NSAssert(false, @"unhandled object %@",object);
 		}
 	}
+	else
+	{
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+}
 	
 #pragma mark - UITextFieldDelegate
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
