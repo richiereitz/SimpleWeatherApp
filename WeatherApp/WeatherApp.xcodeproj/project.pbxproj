@@ -13,6 +13,16 @@
 		B631DD2C1F7FFE2C00349684 /* WAWeatherDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B631DD2B1F7FFE2C00349684 /* WAWeatherDisplayViewController.m */; };
 		B63BE2111F80015C005F53E7 /* WAOpenWeatherNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2101F80015C005F53E7 /* WAOpenWeatherNetworkManager.m */; };
 		B63BE2161F8001DF005F53E7 /* WAOpenWeatherCity.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2151F8001DF005F53E7 /* WAOpenWeatherCity.m */; };
+		B63BE2231F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2221F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.m */; };
+		B63BE2261F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2251F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.m */; };
+		B63BE2291F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2281F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.m */; };
+		B63BE22C1F800AE3005F53E7 /* WAOpenWeatherCityWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE22B1F800AE3005F53E7 /* WAOpenWeatherCityWeather.m */; };
+		B63BE22F1F800AF6005F53E7 /* WAOpenWeatherCityMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE22E1F800AF6005F53E7 /* WAOpenWeatherCityMain.m */; };
+		B63BE2321F800B06005F53E7 /* WAOpenWeatherCityWind.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2311F800B06005F53E7 /* WAOpenWeatherCityWind.m */; };
+		B63BE2351F800B56005F53E7 /* WAOpenWeatherRain.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2341F800B56005F53E7 /* WAOpenWeatherRain.m */; };
+		B63BE2381F800B64005F53E7 /* WAOpenWeatherClouds.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2371F800B64005F53E7 /* WAOpenWeatherClouds.m */; };
+		B63BE23B1F800B9E005F53E7 /* WAOpenWeatherCitySys.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE23A1F800B9E005F53E7 /* WAOpenWeatherCitySys.m */; };
+		B63BE23F1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +43,27 @@
 		B63BE2141F8001DF005F53E7 /* WAOpenWeatherCity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCity.h; sourceTree = "<group>"; };
 		B63BE2151F8001DF005F53E7 /* WAOpenWeatherCity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCity.m; sourceTree = "<group>"; };
 		B63BE2181F800532005F53E7 /* WABlockConversionSynthesis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WABlockConversionSynthesis.h; sourceTree = "<group>"; };
+		B63BE2211F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RKRoute+WAOpenWeatherNetworkManagerRouting.h"; sourceTree = "<group>"; };
+		B63BE2221F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RKRoute+WAOpenWeatherNetworkManagerRouting.m"; sourceTree = "<group>"; };
+		B63BE2241F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.h"; sourceTree = "<group>"; };
+		B63BE2251F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.m"; sourceTree = "<group>"; };
+		B63BE2271F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCityCoordinate.h; sourceTree = "<group>"; };
+		B63BE2281F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCityCoordinate.m; sourceTree = "<group>"; };
+		B63BE22A1F800AE3005F53E7 /* WAOpenWeatherCityWeather.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCityWeather.h; sourceTree = "<group>"; };
+		B63BE22B1F800AE3005F53E7 /* WAOpenWeatherCityWeather.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCityWeather.m; sourceTree = "<group>"; };
+		B63BE22D1F800AF6005F53E7 /* WAOpenWeatherCityMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCityMain.h; sourceTree = "<group>"; };
+		B63BE22E1F800AF6005F53E7 /* WAOpenWeatherCityMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCityMain.m; sourceTree = "<group>"; };
+		B63BE2301F800B06005F53E7 /* WAOpenWeatherCityWind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCityWind.h; sourceTree = "<group>"; };
+		B63BE2311F800B06005F53E7 /* WAOpenWeatherCityWind.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCityWind.m; sourceTree = "<group>"; };
+		B63BE2331F800B56005F53E7 /* WAOpenWeatherRain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherRain.h; sourceTree = "<group>"; };
+		B63BE2341F800B56005F53E7 /* WAOpenWeatherRain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherRain.m; sourceTree = "<group>"; };
+		B63BE2361F800B64005F53E7 /* WAOpenWeatherClouds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherClouds.h; sourceTree = "<group>"; };
+		B63BE2371F800B64005F53E7 /* WAOpenWeatherClouds.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherClouds.m; sourceTree = "<group>"; };
+		B63BE2391F800B9E005F53E7 /* WAOpenWeatherCitySys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCitySys.h; sourceTree = "<group>"; };
+		B63BE23A1F800B9E005F53E7 /* WAOpenWeatherCitySys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCitySys.m; sourceTree = "<group>"; };
+		B63BE23D1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+WARKModelObjectEntityMapping.h"; sourceTree = "<group>"; };
+		B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+WARKModelObjectEntityMapping.m"; sourceTree = "<group>"; };
+		B63BE2411F80114F005F53E7 /* WARKModelObjectEntityMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WARKModelObjectEntityMapping.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +128,13 @@
 		B601DA981F7FFBEC00A8AAE0 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				B63BE2171F8004EC005F53E7 /* Utility */,
+				B601DA991F7FFBEC00A8AAE0 /* AppDelegate.h */,
+				B601DA9A1F7FFBEC00A8AAE0 /* AppDelegate.m */,
+				B63BE21A1F8008C5005F53E7 /* Category */,
 				B63BE2131F8001BD005F53E7 /* Model */,
 				B63BE20E1F80012F005F53E7 /* Networking */,
 				B631DD291F7FFD9B00349684 /* UIViewController */,
-				B601DA991F7FFBEC00A8AAE0 /* AppDelegate.h */,
-				B601DA9A1F7FFBEC00A8AAE0 /* AppDelegate.m */,
+				B63BE2171F8004EC005F53E7 /* Utility */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -139,6 +171,21 @@
 			children = (
 				B63BE2141F8001DF005F53E7 /* WAOpenWeatherCity.h */,
 				B63BE2151F8001DF005F53E7 /* WAOpenWeatherCity.m */,
+				B63BE2271F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.h */,
+				B63BE2281F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.m */,
+				B63BE22D1F800AF6005F53E7 /* WAOpenWeatherCityMain.h */,
+				B63BE22E1F800AF6005F53E7 /* WAOpenWeatherCityMain.m */,
+				B63BE2391F800B9E005F53E7 /* WAOpenWeatherCitySys.h */,
+				B63BE23A1F800B9E005F53E7 /* WAOpenWeatherCitySys.m */,
+				B63BE22A1F800AE3005F53E7 /* WAOpenWeatherCityWeather.h */,
+				B63BE22B1F800AE3005F53E7 /* WAOpenWeatherCityWeather.m */,
+				B63BE2301F800B06005F53E7 /* WAOpenWeatherCityWind.h */,
+				B63BE2311F800B06005F53E7 /* WAOpenWeatherCityWind.m */,
+				B63BE2361F800B64005F53E7 /* WAOpenWeatherClouds.h */,
+				B63BE2371F800B64005F53E7 /* WAOpenWeatherClouds.m */,
+				B63BE2331F800B56005F53E7 /* WAOpenWeatherRain.h */,
+				B63BE2341F800B56005F53E7 /* WAOpenWeatherRain.m */,
+				B63BE2411F80114F005F53E7 /* WARKModelObjectEntityMapping.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -149,6 +196,51 @@
 				B63BE2181F800532005F53E7 /* WABlockConversionSynthesis.h */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		B63BE21A1F8008C5005F53E7 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE23C1F800E38005F53E7 /* NSObject */,
+				B63BE21F1F800910005F53E7 /* RestKit */,
+				B63BE21B1F8008D4005F53E7 /* WAOpenWeatherNetworkManager */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		B63BE21B1F8008D4005F53E7 /* WAOpenWeatherNetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE2241F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.h */,
+				B63BE2251F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.m */,
+			);
+			path = WAOpenWeatherNetworkManager;
+			sourceTree = "<group>";
+		};
+		B63BE21F1F800910005F53E7 /* RestKit */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE2201F80091B005F53E7 /* RKRoute */,
+			);
+			path = RestKit;
+			sourceTree = "<group>";
+		};
+		B63BE2201F80091B005F53E7 /* RKRoute */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE2211F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.h */,
+				B63BE2221F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.m */,
+			);
+			path = RKRoute;
+			sourceTree = "<group>";
+		};
+		B63BE23C1F800E38005F53E7 /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE23D1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.h */,
+				B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */,
+			);
+			path = NSObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,9 +364,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B631DD2C1F7FFE2C00349684 /* WAWeatherDisplayViewController.m in Sources */,
+				B63BE22C1F800AE3005F53E7 /* WAOpenWeatherCityWeather.m in Sources */,
+				B63BE2321F800B06005F53E7 /* WAOpenWeatherCityWind.m in Sources */,
 				B63BE2161F8001DF005F53E7 /* WAOpenWeatherCity.m in Sources */,
+				B63BE2231F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.m in Sources */,
+				B63BE23B1F800B9E005F53E7 /* WAOpenWeatherCitySys.m in Sources */,
+				B63BE2291F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.m in Sources */,
+				B63BE2351F800B56005F53E7 /* WAOpenWeatherRain.m in Sources */,
+				B63BE23F1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m in Sources */,
 				B631DD281F7FFD5E00349684 /* AppDelegate.m in Sources */,
+				B63BE2261F800957005F53E7 /* WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.m in Sources */,
+				B63BE2381F800B64005F53E7 /* WAOpenWeatherClouds.m in Sources */,
 				B601DA921F7FFBC000A8AAE0 /* main.m in Sources */,
+				B63BE22F1F800AF6005F53E7 /* WAOpenWeatherCityMain.m in Sources */,
 				B63BE2111F80015C005F53E7 /* WAOpenWeatherNetworkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
