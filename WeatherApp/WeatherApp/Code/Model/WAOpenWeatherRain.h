@@ -31,7 +31,7 @@
 
 
 
-@interface WAOpenWeatherRain_PropertiesForKVO
+@interface WAOpenWeatherRain_PropertiesForKVO : NSObject
 
 #pragma mark - degreeOfRain
 +(nonnull NSString*)degreeOfRain;

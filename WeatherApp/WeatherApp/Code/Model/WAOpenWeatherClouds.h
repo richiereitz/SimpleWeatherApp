@@ -31,7 +31,7 @@
 
 
 
-@interface WAOpenWeatherClouds_PropertiesForKVO
+@interface WAOpenWeatherClouds_PropertiesForKVO : NSObject
 
 #pragma mark - all
 +(nonnull NSString*)all;
