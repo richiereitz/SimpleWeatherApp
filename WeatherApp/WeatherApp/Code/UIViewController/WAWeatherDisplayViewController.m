@@ -13,6 +13,8 @@
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
 
+#import <RTSMTableSectionManager/RTSMTableSectionManager.h>
+
 
 
 
@@ -23,11 +25,33 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 
 
 
-@interface WAWeatherDisplayViewController () <UITextFieldDelegate>
+typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
+	WAWeatherDisplayViewController_TableSection_type_none,
+	
+	WAWeatherDisplayViewController_TableSection_type_basicDetails,
+	WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand,
+	
+	WAWeatherDisplayViewController_TableSection_type__first	= WAWeatherDisplayViewController_TableSection_type_basicDetails,
+	WAWeatherDisplayViewController_TableSection_type__last		= WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand,
+};
+
+
+
+
+
+
+@interface WAWeatherDisplayViewController () <UITextFieldDelegate, RTSMTableSectionManager_SectionDelegate, UITableViewDelegate, UITableViewDataSource>
 	
 #pragma mark - searchTextField
 @property (nonatomic, readonly, strong, nullable) UITextField* searchTextField;
 -(CGRect)searchTextField_frame;
+	
+#pragma mark - tableView
+@property (nonatomic, readonly, strong, nullable) UITableView* tableView;
+-(CGRect)tableView_frame;
+	
+#pragma mark - tableSectionManager
+@property (nonatomic, readonly, strong, nullable) RTSMTableSectionManager* tableSectionManager;
 
 #pragma mark - searchCityRequest_attempt
 -(void)searchCityRequest_attempt_with_text:(nullable NSString*)text;
@@ -37,10 +61,6 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 #pragma mark - openWeatherCity
 @property (nonatomic, strong, nullable) WAOpenWeatherCity* openWeatherCity;
 -(void)openWeatherCity_setKVORegistered:(BOOL)registered;
-	
-#pragma mark - tableView
-@property (nonatomic, readonly, strong, nullable) UITableView* tableView;
--(CGRect)tableView_frame;
 
 #pragma mark - navigationItem
 -(nullable NSString*)navigationItem_text_appropriate;
@@ -58,6 +78,8 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 -(void)dealloc
 {
 	[self openWeatherCity_setKVORegistered:NO];
+	[self.tableView setDelegate:nil];
+	[self.tableView setDataSource:nil];
 }
 
 #pragma mark - UIViewController
@@ -76,7 +98,13 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 	
 	_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 	[self.tableView setBackgroundColor:[UIColor blackColor]];
+	[self.tableView setDelegate:self];
+	[self.tableView setDataSource:self];
 	[self.view addSubview:self.tableView];
+	
+	_tableSectionManager = [[RTSMTableSectionManager alloc]initWithFirstSection:WAWeatherDisplayViewController_TableSection_type__first
+																	lastSection:WAWeatherDisplayViewController_TableSection_type__last];
+	[self.tableSectionManager setSectionDelegate:self];
 }
 	
 -(void)viewWillLayoutSubviews
@@ -103,6 +131,52 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 	return UIEdgeInsetsInsetRect(self.view.bounds, (UIEdgeInsets){
 		.top = CGRectGetMaxY([self searchTextField_frame])
 	});
+}
+	
+#pragma mark - UITableViewDelegate, UITableViewDataSource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	return self.tableSectionManager.numberOfSectionsAvailable;
+}
+	
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return 1;
+}
+	
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell* const cell = [UITableViewCell new];
+	[cell setBackgroundColor:[UIColor whiteColor]];
+	
+	return cell;
+}
+	
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	WAWeatherDisplayViewController_TableSection_type const sectionType = [self.tableSectionManager sectionForIndexPathSection:indexPath.section];
+	switch (sectionType)
+	{
+		case WAWeatherDisplayViewController_TableSection_type_none:
+			break;
+		
+		case WAWeatherDisplayViewController_TableSection_type_basicDetails:
+			return 350.0f;
+			break;
+		
+		case WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand:
+			return 200.0f;
+			break;
+	}
+	
+	NSAssert(false, @"unhandled section type %li",(long)sectionType);
+	return 0.0f;
+}
+
+#pragma mark - RTSMTableSectionManager_SectionDelegate
+-(BOOL)tableSectionManager:(RTSMTableSectionManager*)tableSectionManager sectionIsAvailable:(NSInteger)section
+{
+		return YES;
 }
 	
 #pragma mark - openWeatherCity
