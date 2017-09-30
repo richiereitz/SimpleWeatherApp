@@ -32,6 +32,7 @@
 		B63BE2121F80018A005F53E7 /* WAOpenWeatherNetworkManager_Blocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherNetworkManager_Blocks.h; sourceTree = "<group>"; };
 		B63BE2141F8001DF005F53E7 /* WAOpenWeatherCity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAOpenWeatherCity.h; sourceTree = "<group>"; };
 		B63BE2151F8001DF005F53E7 /* WAOpenWeatherCity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAOpenWeatherCity.m; sourceTree = "<group>"; };
+		B63BE2181F800532005F53E7 /* WABlockConversionSynthesis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WABlockConversionSynthesis.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 		B601DA981F7FFBEC00A8AAE0 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				B63BE2171F8004EC005F53E7 /* Utility */,
 				B63BE2131F8001BD005F53E7 /* Model */,
 				B63BE20E1F80012F005F53E7 /* Networking */,
 				B631DD291F7FFD9B00349684 /* UIViewController */,
@@ -125,9 +127,9 @@
 		B63BE20E1F80012F005F53E7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B63BE2121F80018A005F53E7 /* WAOpenWeatherNetworkManager_Blocks.h */,
 				B63BE20F1F80015C005F53E7 /* WAOpenWeatherNetworkManager.h */,
 				B63BE2101F80015C005F53E7 /* WAOpenWeatherNetworkManager.m */,
-				B63BE2121F80018A005F53E7 /* WAOpenWeatherNetworkManager_Blocks.h */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -139,6 +141,14 @@
 				B63BE2151F8001DF005F53E7 /* WAOpenWeatherCity.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B63BE2171F8004EC005F53E7 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				B63BE2181F800532005F53E7 /* WABlockConversionSynthesis.h */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
