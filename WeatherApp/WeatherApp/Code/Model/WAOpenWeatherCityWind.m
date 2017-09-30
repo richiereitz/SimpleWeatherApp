@@ -25,7 +25,7 @@
 	[entityMapping addAttributeMappingsFromDictionary:
 	 @{
 	   @"speed"			: [WAOpenWeatherCityWind_PropertiesForKVO speed],
-	   @"deg"		: [WAOpenWeatherCityWind_PropertiesForKVO deg],
+	   @"gust"		: [WAOpenWeatherCityWind_PropertiesForKVO deg],
 	   }];
 	
 	return entityMapping;

@@ -24,6 +24,8 @@
 		B63BE23B1F800B9E005F53E7 /* WAOpenWeatherCitySys.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE23A1F800B9E005F53E7 /* WAOpenWeatherCitySys.m */; };
 		B63BE23F1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE23E1F800E5D005F53E7 /* NSObject+WARKModelObjectEntityMapping.m */; };
 		B63BE2451F802CAD005F53E7 /* WAWeatherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2441F802CAD005F53E7 /* WAWeatherTableViewCell.m */; };
+		B63BE2481F80371A005F53E7 /* WAMainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE2471F80371A005F53E7 /* WAMainTableViewCell.m */; };
+		B63BE24B1F803FB1005F53E7 /* WALeftoverInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BE24A1F803FB1005F53E7 /* WALeftoverInformationTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +69,10 @@
 		B63BE2411F80114F005F53E7 /* WARKModelObjectEntityMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WARKModelObjectEntityMapping.h; sourceTree = "<group>"; };
 		B63BE2431F802CAD005F53E7 /* WAWeatherTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAWeatherTableViewCell.h; sourceTree = "<group>"; };
 		B63BE2441F802CAD005F53E7 /* WAWeatherTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAWeatherTableViewCell.m; sourceTree = "<group>"; };
+		B63BE2461F80371A005F53E7 /* WAMainTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAMainTableViewCell.h; sourceTree = "<group>"; };
+		B63BE2471F80371A005F53E7 /* WAMainTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAMainTableViewCell.m; sourceTree = "<group>"; };
+		B63BE2491F803FB1005F53E7 /* WALeftoverInformationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WALeftoverInformationTableViewCell.h; sourceTree = "<group>"; };
+		B63BE24A1F803FB1005F53E7 /* WALeftoverInformationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WALeftoverInformationTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +256,10 @@
 		B63BE2421F802C93005F53E7 /* UITableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				B63BE2491F803FB1005F53E7 /* WALeftoverInformationTableViewCell.h */,
+				B63BE24A1F803FB1005F53E7 /* WALeftoverInformationTableViewCell.m */,
+				B63BE2461F80371A005F53E7 /* WAMainTableViewCell.h */,
+				B63BE2471F80371A005F53E7 /* WAMainTableViewCell.m */,
 				B63BE2431F802CAD005F53E7 /* WAWeatherTableViewCell.h */,
 				B63BE2441F802CAD005F53E7 /* WAWeatherTableViewCell.m */,
 			);
@@ -377,10 +387,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B631DD2C1F7FFE2C00349684 /* WAWeatherDisplayViewController.m in Sources */,
+				B63BE24B1F803FB1005F53E7 /* WALeftoverInformationTableViewCell.m in Sources */,
 				B63BE22C1F800AE3005F53E7 /* WAOpenWeatherCityWeather.m in Sources */,
 				B63BE2321F800B06005F53E7 /* WAOpenWeatherCityWind.m in Sources */,
 				B63BE2161F8001DF005F53E7 /* WAOpenWeatherCity.m in Sources */,
 				B63BE2231F800938005F53E7 /* RKRoute+WAOpenWeatherNetworkManagerRouting.m in Sources */,
+				B63BE2481F80371A005F53E7 /* WAMainTableViewCell.m in Sources */,
 				B63BE23B1F800B9E005F53E7 /* WAOpenWeatherCitySys.m in Sources */,
 				B63BE2291F800AD4005F53E7 /* WAOpenWeatherCityCoordinate.m in Sources */,
 				B63BE2351F800B56005F53E7 /* WAOpenWeatherRain.m in Sources */,

@@ -10,6 +10,8 @@
 #import "WAOpenWeatherCity.h"
 #import "WAOpenWeatherNetworkManager+WAOpenWeatherCityRequests.h"
 #import "WAWeatherTableViewCell.h"
+#import "WAMainTableViewCell.h"
+#import "WALeftoverInformationTableViewCell.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -27,15 +29,23 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 
 
 
+//Would have a more expansive range of cell types to make UI for each given more time
 typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	WAWeatherDisplayViewController_TableSection_type_none,
 	
 	WAWeatherDisplayViewController_TableSection_type_weather,
-	WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand,
+	WAWeatherDisplayViewController_TableSection_type_main,
+	WAWeatherDisplayViewController_TableSection_type_leftoverInformation,
 	
 	WAWeatherDisplayViewController_TableSection_type__first	= WAWeatherDisplayViewController_TableSection_type_weather,
-	WAWeatherDisplayViewController_TableSection_type__last		= WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand,
+	WAWeatherDisplayViewController_TableSection_type__last		= WAWeatherDisplayViewController_TableSection_type_leftoverInformation,
 };
+
+
+
+
+
+kRUDefineNSStringConstant(kSavedCitySearchStringIdentifier);
 
 
 
@@ -57,6 +67,12 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	
 #pragma mark - weatherTableViewCell
 -(nullable WAWeatherTableViewCell*)weatherTableViewCell;
+	
+#pragma mark - mainTableViewCell
+-(nullable WAMainTableViewCell*)mainTableViewCell;
+	
+#pragma mark - leftoverInfoTableViewCell
+-(nullable WALeftoverInformationTableViewCell*)leftoverInfoTableViewCell;
 
 #pragma mark - searchCityRequest_attempt
 -(void)searchCityRequest_attempt_with_text:(nullable NSString*)text;
@@ -95,13 +111,15 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	[self navigationItem_text_update];
 	
 	_searchTextField = [UITextField new];
-	[self.searchTextField setBackgroundColor:[UIColor orangeColor]];
+	[self.searchTextField setBackgroundColor:[UIColor lightGrayColor]];
 	[self.searchTextField setTextAlignment:NSTextAlignmentCenter];
 	[self.searchTextField setReturnKeyType:UIReturnKeySearch];
 	[self.searchTextField setDelegate:self];
+	[self.searchTextField setPlaceholder:@"Search for a city"];
 	[self.view addSubview:self.searchTextField];
 	
 	_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+	[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.tableView setBackgroundColor:[UIColor blackColor]];
 	[self.tableView setDelegate:self];
 	[self.tableView setDataSource:self];
@@ -110,6 +128,17 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	_tableSectionManager = [[RTSMTableSectionManager alloc]initWithFirstSection:WAWeatherDisplayViewController_TableSection_type__first
 																	lastSection:WAWeatherDisplayViewController_TableSection_type__last];
 	[self.tableSectionManager setSectionDelegate:self];
+	
+	//would like to, rather than save the string and make the request on load, save the custom object to a file using NSKeyedArchiver
+	NSString* const lastSearchString = [[NSUserDefaults standardUserDefaults] objectForKey:kSavedCitySearchStringIdentifier];
+	if (lastSearchString.length > 0)
+	{
+		[self searchCityRequest_attempt_with_text:lastSearchString];
+	}
+	else
+	{
+		[self.searchTextField becomeFirstResponder];
+	}
 }
 	
 -(void)viewWillLayoutSubviews
@@ -162,8 +191,12 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 		return [self weatherTableViewCell];
 		break;
 		
-		case WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand:
-		return [UITableViewCell new];
+		case WAWeatherDisplayViewController_TableSection_type_main:
+		return [self mainTableViewCell];
+		break;
+		
+		case WAWeatherDisplayViewController_TableSection_type_leftoverInformation:
+		return [self leftoverInfoTableViewCell];
 		break;
 	}
 	
@@ -173,6 +206,8 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	//Would make these cells self-sizing based on content given more time
+	
 	WAWeatherDisplayViewController_TableSection_type const sectionType = [self.tableSectionManager sectionForIndexPathSection:indexPath.section];
 	switch (sectionType)
 	{
@@ -180,10 +215,14 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 			break;
 		
 		case WAWeatherDisplayViewController_TableSection_type_weather:
-			return 350.0f;
+			return 70.0f;
 			break;
 		
-		case WAWeatherDisplayViewController_TableSection_type_detailsIDontUnderstand:
+		case WAWeatherDisplayViewController_TableSection_type_main:
+			return 200.0f;
+			break;
+		
+		case WAWeatherDisplayViewController_TableSection_type_leftoverInformation:
 			return 200.0f;
 			break;
 	}
@@ -191,6 +230,35 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	NSAssert(false, @"unhandled section type %li",(long)sectionType);
 	return 0.0f;
 }
+	
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+	{
+		WAWeatherDisplayViewController_TableSection_type const sectionType = [self.tableSectionManager sectionForIndexPathSection:section];
+		switch (sectionType)
+		{
+			case WAWeatherDisplayViewController_TableSection_type_none:
+			break;
+			
+			case WAWeatherDisplayViewController_TableSection_type_weather:
+			case WAWeatherDisplayViewController_TableSection_type_main:
+			return 10.0f;
+			break;
+			
+			case WAWeatherDisplayViewController_TableSection_type_leftoverInformation:
+			return 0.0f;
+			break;
+		}
+		
+		NSAssert(false, @"unhandled section type %li",(long)sectionType);
+		return 0.0f;
+	}
+	
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+	{
+		UIView* const footer = [UIView new];
+		[footer setBackgroundColor:[UIColor clearColor]];
+		return footer;
+	}
 
 #pragma mark - RTSMTableSectionManager_SectionDelegate
 -(BOOL)tableSectionManager:(RTSMTableSectionManager*)tableSectionManager sectionIsAvailable:(NSInteger)section
@@ -209,13 +277,47 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 			weatherCell = [[WAWeatherTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WAWeatherTableViewCell];
 		}
 		
-		//I don't like doing this but doing so for speed so I don't have to display potentially multiple weather objects
+		//I don't like doing this but doing so for speed so I don't have to handle potentially multiple weather objects, as the data is sent in an array
 		if (self.openWeatherCity.weather.count > 0)
 		{
 			[weatherCell setWeather:self.openWeatherCity.weather[0]];
 		}
 		
 		return weatherCell;
+	}
+	
+#pragma mark - mainTableViewCell
+-(nullable WAMainTableViewCell*)mainTableViewCell
+	{
+		kRUDefineNSStringConstant(kWAWeatherDisplayViewController_cellIdentifier_WAMainTableViewCell);
+		
+		WAMainTableViewCell* mainTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WAMainTableViewCell];
+		if (mainTableViewCell == nil)
+		{
+			mainTableViewCell = [[WAMainTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WAMainTableViewCell];
+		}
+		
+		[mainTableViewCell setMain:self.openWeatherCity.main];
+		
+		return mainTableViewCell;
+	}
+	
+#pragma mark - leftoverInfoTableViewCell
+-(nullable WALeftoverInformationTableViewCell*)leftoverInfoTableViewCell
+	{
+		kRUDefineNSStringConstant(kWAWeatherDisplayViewController_cellIdentifier_WALeftoverInformationTableViewCell);
+		
+		WALeftoverInformationTableViewCell* leftoverInfoTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WALeftoverInformationTableViewCell];
+		if (leftoverInfoTableViewCell == nil)
+		{
+			leftoverInfoTableViewCell = [[WALeftoverInformationTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kWAWeatherDisplayViewController_cellIdentifier_WALeftoverInformationTableViewCell];
+		}
+		
+		[leftoverInfoTableViewCell setRain:self.openWeatherCity.rain];
+		[leftoverInfoTableViewCell setClouds:self.openWeatherCity.clouds];
+		[leftoverInfoTableViewCell setWind:self.openWeatherCity.wind];
+		
+		return leftoverInfoTableViewCell;
 	}
 	
 #pragma mark - openWeatherCity
@@ -282,23 +384,23 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 			}
 			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO base]])
 			{
-			NSLog(@"base");
+				NSLog(@"base");
 			}
 			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO main]])
 			{
-				NSLog(@"main");
+				[self.tableView reloadData];
 			}
 			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO wind]])
 			{
-				NSLog(@"wind");
+				[self.tableView reloadData];
 			}
 			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO rain]])
 			{
-				NSLog(@"rain");
+				[self.tableView reloadData];
 			}
 			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO clouds]])
 			{
-				NSLog(@"clouds");
+				[self.tableView reloadData];
 			}
 			else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO dt]])
 			{
@@ -340,6 +442,10 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	[self searchCityRequest_attempt_with_text:textField.text];
+	
+	//would like to, rather than save the string and make the request on load, save the custom object to a file using NSKeyedArchiver
+	[[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:kSavedCitySearchStringIdentifier];
+	
 	return !textField.resignFirstResponder;
 }
 
@@ -369,7 +475,7 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 
 -(void)searchCityRequest_attempt_handleFailure
 {
-	UIAlertController* const alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Something went wrong. Please try our search again" preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertController* const alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Something went wrong. Please try your search again" preferredStyle:UIAlertControllerStyleAlert];
 	UIAlertAction* okayAction = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil];
 	[alert addAction:okayAction];
 	
@@ -380,7 +486,7 @@ typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 -(nullable NSString*)navigationItem_text_appropriate
 {
 	WAOpenWeatherCity* const city = self.openWeatherCity;
-	kRUConditionalReturn_ReturnValue(city == nil, NO, @"Search for a city!");
+	kRUConditionalReturn_ReturnValue(city == nil, NO, @"Weather App");
 	kRUConditionalReturn_ReturnValue(city.name == nil, NO, @"Hm, try again");
 	
 	return city.name;

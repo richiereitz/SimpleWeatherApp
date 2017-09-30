@@ -34,7 +34,7 @@
 	NSMutableDictionary<NSString*,NSString*>* const parameters = [NSMutableDictionary<NSString*,NSString*> dictionary];
 
 	[parameters setObjectOrRemoveIfNil:query forKey:@"q"];
-	
+	[parameters setObjectOrRemoveIfNil:@"imperial" forKey:@"units"];
 	NSString* const api_key = @"371a93852469ab86c77781b87872bbe4";
 	[parameters setObjectOrRemoveIfNil:api_key forKey:@"APPID"];
 	

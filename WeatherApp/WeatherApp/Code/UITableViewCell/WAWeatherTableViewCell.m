@@ -13,6 +13,8 @@
 #import <ResplendentUtilities/UIView+RUUtility.h>
 #import <ResplendentUtilities/RUConstants.h>
 
+#import <RUTextSize/UILabel+RUTextSize.h>
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
@@ -32,6 +34,17 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 -(CGRect)iconImageView_frame;
 -(void)iconImageView_image_update;
 -(nullable NSString*)iconImageView_urlString_appropriate;
+	
+#pragma mark - mainLabel
+@property (nonatomic, readonly, strong, nullable) UILabel* mainLabel;
+-(CGRect)mainLabel_frame;
+-(void)mainLabel_text_update;
+	
+#pragma mark - descriptionLabel
+@property (nonatomic, readonly, strong, nullable) UILabel* descriptionLabel;
+-(CGRect)descriptionLabel_frame;
+-(void)descriptionLabel_text_update;
+	
 	
 #pragma mark - weather
 -(void)weather_setKVORegistered:(BOOL)registered;
@@ -56,8 +69,16 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 	if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
 	{
 		_iconImageView = [UIImageView new];
-		[self.iconImageView setBackgroundColor:[UIColor blueColor]];
+		[self.iconImageView setBackgroundColor:[UIColor clearColor]];
 		[self.contentView addSubview:self.iconImageView];
+		
+		_mainLabel = [UILabel new];
+		[self.mainLabel setBackgroundColor:[UIColor whiteColor]];
+		[self.contentView addSubview:self.mainLabel];
+		
+		_descriptionLabel = [UILabel new];
+		[self.descriptionLabel setBackgroundColor:[UIColor whiteColor]];
+		[self.contentView addSubview:self.descriptionLabel];
 	}
 	
 	return self;
@@ -69,6 +90,8 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 		[super layoutSubviews];
 		
 		[self.iconImageView setFrame:[self iconImageView_frame]];
+		[self.mainLabel setFrame:[self mainLabel_frame]];
+		[self.descriptionLabel setFrame:[self descriptionLabel_frame]];
 	}
 	
 #pragma mark - weather
@@ -89,7 +112,6 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 	kRUConditionalReturn(weather == nil, NO);
 	
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[WAOpenWeatherCityWeather_PropertiesForKVO identifier]];
 	[propertiesToObserve addObject:[WAOpenWeatherCityWeather_PropertiesForKVO main]];
 	[propertiesToObserve addObject:[WAOpenWeatherCityWeather_PropertiesForKVO weatherDescription]];
 	[propertiesToObserve addObject:[WAOpenWeatherCityWeather_PropertiesForKVO icon]];
@@ -118,17 +140,13 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 		{
 			if (object == self.weather)
 			{
-				if ([keyPath isEqualToString:[WAOpenWeatherCityWeather_PropertiesForKVO identifier]])
+				if ([keyPath isEqualToString:[WAOpenWeatherCityWeather_PropertiesForKVO weatherDescription]])
 				{
-					NSLog(@"Coordinate");
-				}
-				else if ([keyPath isEqualToString:[WAOpenWeatherCityWeather_PropertiesForKVO weatherDescription]])
-				{
-					NSLog(@"weather");
+					[self descriptionLabel_text_update];
 				}
 				else if ([keyPath isEqualToString:[WAOpenWeatherCityWeather_PropertiesForKVO main]])
 				{
-					NSLog(@"base");
+					[self mainLabel_text_update];
 				}
 				else if ([keyPath isEqualToString:[WAOpenWeatherCityWeather_PropertiesForKVO icon]])
 				{
@@ -153,12 +171,20 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 #pragma mark - iconImageView
 -(CGRect)iconImageView_frame
 	{
-		return self.viewForLastBaselineLayout.bounds;
+		//Would like to make this size more exact had I more time
+		CGFloat const dimension = 50.0f;
+		
+		return CGRectCeilOrigin((CGRect){
+			.origin.y		= 10.0f,
+			.size.width		= dimension,
+			.size.height	= dimension,
+		});
 	}
 	
 -(void)iconImageView_image_update
 	{
 		[self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[self iconImageView_urlString_appropriate]]];
+		[self setNeedsLayout];
 	}
 	
 -(nullable NSString*)iconImageView_urlString_appropriate
@@ -170,6 +196,41 @@ static void* kWAWeatherTableViewCell_KVOContext = &kWAWeatherTableViewCell_KVOCo
 		kRUConditionalReturn_ReturnValueNil(iconString == nil || iconString.length < 1, NO);
 		
 		return RUStringWithFormat(@"https://openweathermap.org/img/w/%@.png", iconString);
+	}
+	
+#pragma mark - mainLabel
+-(CGRect)mainLabel_frame
+	{
+		CGSize const size = [self.mainLabel ruTextSize];
+		
+		return CGRectCeilOrigin((CGRect){
+			.origin.x		= CGRectGetMaxX([self iconImageView_frame]) + 5.0f,
+			.origin.y		= 10.0f,
+			.size		= size
+		});
+	}
+	
+-(void)mainLabel_text_update
+	{
+		[self.mainLabel setText:self.weather.main];
+		[self setNeedsLayout];
+	}
+	
+#pragma mark - descriptionLabel
+-(CGRect)descriptionLabel_frame
+	{
+		CGSize const size = [self.descriptionLabel ruTextSize];
+		
+		return CGRectCeilOrigin((CGRect){
+			.origin.x		= CGRectGetMinX([self mainLabel_frame]),
+			.origin.y		= CGRectGetMaxY([self mainLabel_frame]) + 5.0f,
+			.size		= size
+		});
+	}
+-(void)descriptionLabel_text_update
+	{
+		[self.descriptionLabel setText:self.weather.weatherDescription];
+		[self setNeedsLayout];
 	}
 
 @end
