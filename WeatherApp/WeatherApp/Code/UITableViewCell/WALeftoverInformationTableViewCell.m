@@ -123,7 +123,7 @@
 	}
 -(void)windLabel_text_update
 	{
-		[self.windLabel setText:RUStringWithFormat(@"Wind Speed: %@, Wind gust: %@", self.wind.speed.stringValue, self.wind.deg.stringValue)];
+		[self.windLabel setText:RUStringWithFormat(@"Wind Speed: %@ MPH, Wind gust: %@", self.wind.speed.stringValue, self.wind.deg.stringValue)];
 		[self setNeedsLayout];
 	}
 	

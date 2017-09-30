@@ -282,7 +282,7 @@ kRUDefineNSStringConstant(kSavedCitySearchStringIdentifier);
 		{
 			[weatherCell setWeather:self.openWeatherCity.weather[0]];
 		}
-		
+		[weatherCell setBackgroundColor:[UIColor blueColor]];
 		return weatherCell;
 	}
 	
@@ -298,7 +298,7 @@ kRUDefineNSStringConstant(kSavedCitySearchStringIdentifier);
 		}
 		
 		[mainTableViewCell setMain:self.openWeatherCity.main];
-		
+		[mainTableViewCell setBackgroundColor:[UIColor greenColor]];
 		return mainTableViewCell;
 	}
 	
@@ -316,7 +316,7 @@ kRUDefineNSStringConstant(kSavedCitySearchStringIdentifier);
 		[leftoverInfoTableViewCell setRain:self.openWeatherCity.rain];
 		[leftoverInfoTableViewCell setClouds:self.openWeatherCity.clouds];
 		[leftoverInfoTableViewCell setWind:self.openWeatherCity.wind];
-		
+		[leftoverInfoTableViewCell setBackgroundColor:[UIColor grayColor]];
 		return leftoverInfoTableViewCell;
 	}
 	
@@ -443,9 +443,12 @@ kRUDefineNSStringConstant(kSavedCitySearchStringIdentifier);
 {
 	[self searchCityRequest_attempt_with_text:textField.text];
 	
-	//would like to, rather than save the string and make the request on load, save the custom object to a file using NSKeyedArchiver
-	[[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:kSavedCitySearchStringIdentifier];
-	
+	if (textField.text > 0)
+	{
+		//would like to, rather than save the string and make the request on load, save the custom object to a file using NSKeyedArchiver
+		[[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:kSavedCitySearchStringIdentifier];
+	}
+
 	return !textField.resignFirstResponder;
 }
 
