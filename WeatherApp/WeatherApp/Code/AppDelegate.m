@@ -21,9 +21,12 @@
 	WAWeatherDisplayViewController* const newViewController = [WAWeatherDisplayViewController new];
 	[newViewController.view setBackgroundColor:[UIColor greenColor]];
 	
+	UINavigationController* const navController = [UINavigationController new];
+	[navController setViewControllers:@[newViewController]];
+	
 	UIWindow* const window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
 	[window setBackgroundColor:[UIColor redColor]];
-	[window setRootViewController:newViewController];
+	[window setRootViewController:navController];
 	
 	[self setWindow:window];
 	

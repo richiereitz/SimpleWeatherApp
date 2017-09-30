@@ -37,6 +37,14 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 #pragma mark - openWeatherCity
 @property (nonatomic, strong, nullable) WAOpenWeatherCity* openWeatherCity;
 -(void)openWeatherCity_setKVORegistered:(BOOL)registered;
+	
+#pragma mark - tableView
+@property (nonatomic, readonly, strong, nullable) UITableView* tableView;
+-(CGRect)tableView_frame;
+
+#pragma mark - navigationItem
+-(nullable NSString*)navigationItem_text_appropriate;
+-(void)navigationItem_text_update;
 
 @end
 
@@ -57,13 +65,18 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 {
 	[super viewDidLoad];
 	
+	[self navigationItem_text_update];
+	
 	_searchTextField = [UITextField new];
 	[self.searchTextField setBackgroundColor:[UIColor orangeColor]];
 	[self.searchTextField setTextAlignment:NSTextAlignmentCenter];
 	[self.searchTextField setReturnKeyType:UIReturnKeySearch];
 	[self.searchTextField setDelegate:self];
-	
 	[self.view addSubview:self.searchTextField];
+	
+	_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+	[self.tableView setBackgroundColor:[UIColor blackColor]];
+	[self.view addSubview:self.tableView];
 }
 	
 -(void)viewWillLayoutSubviews
@@ -71,18 +84,24 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 	[super viewWillLayoutSubviews];
 	
 	[self.searchTextField setFrame:[self searchTextField_frame]];
+	[self.tableView setFrame:[self tableView_frame]];
 }
 	
 #pragma mark - searchTextField
 -(CGRect)searchTextField_frame
 {
-	CGRect const view_bounds = self.view.bounds;
-	CGFloat const height = 50.0f;
 	return CGRectCeilOrigin((CGRect){
-		.origin.x		= 0.0f,
-		.origin.y		= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(height, CGRectGetHeight(view_bounds)),
-		.size.width		= CGRectGetWidth(view_bounds),
-		.size.height	= height,
+		.origin.y	 	= CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]),
+		.size.width		= CGRectGetWidth(self.view.bounds),
+		.size.height	= 50.0f,
+	});
+}
+
+#pragma mark - tableView
+-(CGRect)tableView_frame
+{
+	return UIEdgeInsetsInsetRect(self.view.bounds, (UIEdgeInsets){
+		.top = CGRectGetMaxY([self searchTextField_frame])
 	});
 }
 	
@@ -182,7 +201,7 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 				}
 				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO name]])
 				{
-					NSLog(@"name");
+					[self navigationItem_text_update];
 				}
 				else if ([keyPath isEqualToString:[WAOpenWeatherCity_PropertiesForKVO cod]])
 				{
@@ -242,6 +261,21 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 	[alert addAction:okayAction];
 	
 	[self presentViewController:alert animated:YES completion:nil];
+}
+	
+#pragma mark - navigationItem
+-(nullable NSString*)navigationItem_text_appropriate
+{
+	WAOpenWeatherCity* const city = self.openWeatherCity;
+	kRUConditionalReturn_ReturnValue(city == nil, NO, @"Search for a city!");
+	kRUConditionalReturn_ReturnValue(city.name == nil, NO, @"Hm, try again");
+	
+	return city.name;
+}
+	
+-(void)navigationItem_text_update
+{
+	[self.navigationItem setTitle:[self navigationItem_text_appropriate]];
 }
 
 @end
