@@ -43,7 +43,7 @@
 												   objectMapping:entityMapping_city
 													   parameters:[NSDictionary dictionaryWithDictionary:parameters]
 												cancelOldRequests:YES
-														  success:wa_rkGeneralOperationSuccessBlock_with_WAOpenWeatherCityArray_block_to_generalSuccessBlock(success)
+														  success:wa_rkGeneralOperationSuccessBlock_with_WAOpenWeatherCity_block_to_generalSuccessBlock(success)
 														  failure:failure];
 }
 

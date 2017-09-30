@@ -10,6 +10,7 @@
 #define WAOpenWeatherNetworkManager_Blocks_h
 
 #import "WABlockConversionSynthesis.h"
+#import "WAOpenWeatherCity.h"
 
 #import <Foundation/Foundation.h>
 
@@ -19,7 +20,6 @@
 
 
 
-@class WAOpenWeatherCity;
 @class RKObjectRequestOperation;
 
 
@@ -32,10 +32,8 @@
 typedef void(^wa_OpenWeatherNetworkManager_failureBlock) (RKObjectRequestOperation* _Nonnull operation, NSError* _Nonnull error, BOOL handledError);
 
 #pragma mark - Weather Search Results
-typedef void(^wa_getOpenWeatherCity_successBlock)(RKObjectRequestOperation* _Nonnull operation, NSArray<WAOpenWeatherCity*>* _Nullable openWeatherCities);
-
-typedef void(^wa_getOpenWeatherCity_successBlock)(RKObjectRequestOperation* _Nonnull operation, NSArray<WAOpenWeatherCity*>* _Nullable openWeatherCities);
-wa_rkGeneralOperationSuccessBlock_withObjects_convert_to_wa_rkOperationSuccessBlock(wa_getOpenWeatherCity_successBlock, WAOpenWeatherCity)
+typedef void(^wa_getOpenWeatherCity_successBlock)(RKObjectRequestOperation* _Nonnull operation, WAOpenWeatherCity* _Nullable openWeatherCity);
+wa_rkGeneralOperationSuccessBlock_withObject_convert_to_wa_rkOperationSuccessBlock(wa_getOpenWeatherCity_successBlock, WAOpenWeatherCity)
 
 
 #endif /* WAOpenWeatherNetworkManager_Blocks_h */
