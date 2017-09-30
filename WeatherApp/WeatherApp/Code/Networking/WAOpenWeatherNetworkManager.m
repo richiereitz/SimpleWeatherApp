@@ -75,7 +75,7 @@
 
 -(nullable NSURL*)objectManager_baseURL
 {
-	return [NSURL URLWithString:@"http://api.openweathermap.org/data/2.5/weather"];
+	return [NSURL URLWithString:@"https://api.openweathermap.org/data/2.5/weather"];
 }
 
 #pragma mark - Singleton

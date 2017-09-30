@@ -34,7 +34,7 @@ typedef void(^wa_OpenWeatherNetworkManager_failureBlock) (RKObjectRequestOperati
 #pragma mark - Weather Search Results
 typedef void(^wa_getOpenWeatherCity_successBlock)(RKObjectRequestOperation* _Nonnull operation, NSArray<WAOpenWeatherCity*>* _Nullable openWeatherCities);
 
-typedef void(^wa_getOpenWeatherCity_successBlock)(RKObjectRequestOperation* _Nonnull operation, NSArray<WAOpenWeatherCity*>* _Nullable IMDBMovies);
+typedef void(^wa_getOpenWeatherCity_successBlock)(RKObjectRequestOperation* _Nonnull operation, NSArray<WAOpenWeatherCity*>* _Nullable openWeatherCities);
 wa_rkGeneralOperationSuccessBlock_withObjects_convert_to_wa_rkOperationSuccessBlock(wa_getOpenWeatherCity_successBlock, WAOpenWeatherCity)
 
 

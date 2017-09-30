@@ -77,7 +77,7 @@ Example WAOpenWeatherCity object fromhttp://openweathermap.org/weather-condition
 @interface WAOpenWeatherCity : NSObject <WARKModelObjectEntityMapping>
 
 #pragma mark - coordinate
-@property (nonatomic, readonly, copy, nullable) WAOpenWeatherCityCoordinate* coord;
+@property (nonatomic, readonly, copy, nullable) WAOpenWeatherCityCoordinate* coordinate;
 
 #pragma mark - weather
 @property (nonatomic, readonly, copy, nullable) WAOpenWeatherCityWeather* weather;

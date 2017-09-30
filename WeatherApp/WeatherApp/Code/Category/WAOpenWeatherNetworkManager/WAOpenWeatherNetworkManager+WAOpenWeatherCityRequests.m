@@ -37,7 +37,6 @@
 	
 	NSString* const api_key = @"371a93852469ab86c77781b87872bbe4";
 	[parameters setObjectOrRemoveIfNil:api_key forKey:@"APPID"];
-	[parameters setObjectOrRemoveIfNil:@"movie" forKey:@"type"];
 	
 	return [self enqueue_restkitObjectRequestOperation_with_route:route
 														   object:nil
