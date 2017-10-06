@@ -29,7 +29,7 @@ static void* kWAWeatherDisplayViewController_KVOContext = &kWAWeatherDisplayView
 
 
 
-//Would have a more expansive range of cell types to make UI for each given more time
+//Would have a more expansive range of cell types to make customizeable cells and UI for each given more time
 typedef NS_ENUM(NSInteger, WAWeatherDisplayViewController_TableSection_type) {
 	WAWeatherDisplayViewController_TableSection_type_none,
 	
